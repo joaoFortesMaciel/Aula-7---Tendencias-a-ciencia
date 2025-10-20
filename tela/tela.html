@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloco de Notas Simples</title>
+    <link rel="stylesheet" href="tela.css">
+</head>
+<body>
+
+    <div id="editor-container">
+        <div id="header-editor">
+            <h2 id="note-title" contenteditable="true">Minhas Notas</h2>
+            <button id="register-button">Registrar</button>
+        </div>
+
+        <textarea id="note-content" placeholder="Escreva sua nota aqui..."></textarea>
+    </div>
+
+    <button id="clear-all-button">Excluir Todas as Notas Registradas</button>
+
+    <div id="registered-notes-container">
+        <h3>Registros:</h3>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const registerButton = document.getElementById('register-button');
+            const noteContent = document.getElementById('note-content');
+            const registeredNotesContainer = document.getElementById('registered-notes-container');
+            const noteTitleElement = document.getElementById('note-title');
+            const clearAllButton = document.getElementById('clear-all-button');
+            let noteCount = 0; // Contador para o título das notas (Nota 1, Nota 2, etc.)
+
+            // Função para registrar e compactar a nota
+            registerButton.addEventListener('click', () => {
+                const content = noteContent.value.trim();
+
+                if (content === "") {
+                    alert("A nota não pode estar vazia.");
+                    return;
+                }
+
+                noteCount++;
+                const noteTitle = `Nota ${noteCount}`;
+
+                // 1. Criar o botão compactado
+                const noteButton = document.createElement('button');
+                noteButton.className = 'note-button';
+                noteButton.innerHTML = `
+                    <span>${noteTitle}</span>
+                    <button class="delete-note-btn" data-note-id="${noteCount}">&times;</button>
+                `;
+                
+                // Armazenar o conteúdo completo no data-attribute
+                noteButton.setAttribute('data-full-content', content);
+                noteButton.setAttribute('data-note-id', noteCount);
+
+                // 2. Adicionar o botão à área de registros
+                registeredNotesContainer.appendChild(noteButton);
+
+                // 3. Compactar a nota (limpar o campo de escrita)
+                noteContent.value = '';
+                
+                // 4. Lógica para Expandir/Exibir a nota (ao clicar no botão)
+                noteButton.querySelector('span').addEventListener('click', () => {
+                    const fullContent = noteButton.getAttribute('data-full-content');
+                    const currentTitle = noteButton.textContent.trim().replace('×', '').trim();
+                    
+                    // Coloca o conteúdo de volta na área de edição
+                    noteContent.value = fullContent;
+                    // Define o título da aba principal para o título da nota
+                    noteTitleElement.textContent = currentTitle;
+                });
+            });
+
+            // Função para remover uma nota individualmente
+            registeredNotesContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('delete-note-btn')) {
+                    const noteId = event.target.getAttribute('data-note-id');
+                    const noteElement = document.querySelector(`.note-button[data-note-id="${noteId}"]`);
+                    
+                    if (noteElement) {
+                        noteElement.remove();
+                    }
+                    // NOTA: O contador 'noteCount' não é redefinido. As próximas notas
+                    // continuarão a contagem (Nota 4, 5...) para evitar duplicidade de IDs.
+                }
+            });
+
+            // Função para remover todas as notas
+            clearAllButton.addEventListener('click', () => {
+                if (confirm("Tem certeza que deseja excluir TODAS as notas registradas?")) {
+                    // Remove todos os botões de nota dentro do container
+                    registeredNotesContainer.querySelectorAll('.note-button').forEach(button => button.remove());
+                    noteCount = 0; // Reseta o contador
+                }
+            });
+
+            // Lógica para o Título Editável (Não precisa de código JS complexo, o atributo contenteditable faz a maior parte)
+            // Apenas adicionando um evento para limpar a área de texto ao focar no título e se ele ainda for o padrão
+            noteTitleElement.addEventListener('focus', () => {
+                if (noteTitleElement.textContent === "Minhas Notas") {
+                    noteTitleElement.textContent = "";
+                }
+            });
+
+            noteTitleElement.addEventListener('blur', () => {
+                if (noteTitleElement.textContent.trim() === "") {
+                    noteTitleElement.textContent = "Minhas Notas";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

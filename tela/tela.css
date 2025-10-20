@@ -1,0 +1,175 @@
+    /* Cores Vintage */
+    :root {
+        --cor-fundo: #F3EEE4; /* Creme de papel antigo (Off-White) */
+        --cor-container: #FFFBF5; /* Branco suave */
+        --cor-borda: #B0A695; /* Marrom pálido/Taupe */
+        --cor-titulo: #555555; /* Cinza suave */
+        --cor-texto: #3A4D39; /* Verde musgo escuro para o texto */
+        --cor-registro-bg: #D2E3C8; /* Verde menta suave/Pastel */
+        --cor-registrar-btn: #ECCA9C; /* Amarelo/Ocre Queimado */
+        --cor-registrar-hover: #DBA979; /* Um pouco mais escuro */
+        --cor-nota-btn: #4F6F52; /* Verde musgo */
+        --cor-nota-hover: #3A4D39;
+        --cor-excluir-btn: #8C3232; /* Vermelho tijolo desbotado */
+        --cor-excluir-hover: #6B2323;
+        --sombra-sutil: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 20px;
+        background-color: var(--cor-fundo);
+    }
+
+    #editor-container {
+        background: var(--cor-container);
+        padding: 25px;
+        border-radius: 6px;
+        border: 1px solid var(--cor-borda);
+        box-shadow: var(--sombra-sutil);
+        margin-bottom: 25px;
+    }
+
+    #header-editor {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    /* Título Editável (Notas) */
+    #note-title {
+        font-size: 1.6em; 
+        color: var(--cor-titulo);
+        font-weight: normal;
+        outline: none;
+        border-bottom: 2px dashed var(--cor-borda);
+        padding-bottom: 5px;
+        padding-top: 5px;
+        cursor: text;
+    }
+    #note-title:hover {
+        border-bottom: 2px solid var(--cor-borda);
+    }
+    #note-title:focus {
+        background-color: #fcf8e3;
+        border-bottom: 2px solid var(--cor-nota-btn);
+    }
+
+    /* Área de Escrever Grande */
+    #note-content {
+        width: 100%;
+        height: 180px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid var(--cor-borda);
+        border-radius: 4px;
+        box-sizing: border-box;
+        resize: vertical;
+        background-color: #FEFBF6;
+        color: var(--cor-texto);
+        line-height: 1.4;
+    }
+
+    /* Estilo Base para os botões que DEVEM ter a aparência "vintage de caixa" */
+    #register-button,
+    #clear-all-button,
+    .note-button {
+        border: 2px solid var(--cor-borda);
+        border-radius: 4px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
+        box-shadow: 1px 1px 0px var(--cor-borda); /* Efeito 3D sutil */
+        cursor: pointer;
+    }
+    
+    /* Botão Registrar */
+    #register-button {
+        background-color: var(--cor-registrar-btn);
+        color: var(--cor-texto);
+        padding: 10px 18px;
+    }
+    #register-button:hover {
+        background-color: var(--cor-registrar-hover);
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    /* Botão Excluir Todas (Abaixo da Aba) */
+    #clear-all-button {
+        background-color: var(--cor-excluir-btn);
+        color: var(--cor-container);
+        padding: 10px 15px;
+        margin-top: 15px;
+    }
+    #clear-all-button:hover {
+        background-color: var(--cor-excluir-hover);
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    /* Área de Registros Compactados */
+    #registered-notes-container {
+        margin-top: 25px;
+        padding: 20px;
+        background-color: var(--cor-registro-bg);
+        border: 1px solid var(--cor-borda);
+        border-radius: 6px;
+    }
+    #registered-notes-container h3 {
+        color: var(--cor-texto);
+        margin-top: 0;
+        border-bottom: 1px solid var(--cor-borda);
+        padding-bottom: 8px;
+    }
+
+    /* Estilo dos Botões de Nota Compactada */
+    .note-button {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        background-color: var(--cor-nota-btn);
+        color: var(--cor-container);
+        /* Redefinindo a borda para não ter a cor padrao da global */
+        border: 2px solid var(--cor-nota-hover); 
+        padding: 10px;
+        margin-bottom: 8px;
+        box-shadow: 2px 2px 0px var(--cor-nota-hover);
+    }
+    .note-button:hover {
+        background-color: var(--cor-nota-hover);
+        transform: translateY(0);
+        box-shadow: 1px 1px 0px var(--cor-nota-hover);
+    }
+    
+    .note-button span {
+        font-size: 1em;
+        padding: 0 5px;
+    }
+
+    /* CORREÇÃO APLICADA AQUI: Botão de exclusão dentro do botão compactado */
+    .delete-note-btn {
+        background: none;
+        /* ANULANDO AS PROPRIEDADES DE BORDA/SOMBRA DA REGRA GENÉRICA */
+        border: none;
+        box-shadow: none;
+        
+        color: var(--cor-registro-bg); 
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 15px;
+        font-size: 1.2em;
+        text-shadow: 1px 1px 1px var(--cor-nota-btn);
+        
+        /* Garantir que a transição de cor do hover funcione bem */
+        transition: color 0.2s ease; 
+    }
+    .delete-note-btn:hover {
+        color: var(--cor-registrar-btn);
+        transform: none;
+    }
