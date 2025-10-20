@@ -1,1 +1,1 @@
-# Tend-ncias-em-ci-ncia-da-computa-o---Aula-7
+# Tendências em ciência da computação - Aula 7
